@@ -1,0 +1,15 @@
+{
+    "name": "team_orange",
+    "version": "0.1.0",
+    "main": "index.js",
+    "repository": "https://github.com/Science-Camp-Softwareentwicklung-02-22/TeamOrange",
+    "author": "christopher-besch <mail@chris-besch.com>",
+    "license": "MIT",
+    "scripts": {
+        "dev": "tsc --watch",
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "typescript": "^4.6.2"
+    }
+}
