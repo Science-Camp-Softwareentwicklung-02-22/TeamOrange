@@ -1,3 +1,4 @@
-import { setup_canvas } from "./canvas";
+import { Ctx, setup_canvas, draw_quad } from "./canvas";
 
-setup_canvas();
+let ctx = setup_canvas();
+draw_quad(ctx);
