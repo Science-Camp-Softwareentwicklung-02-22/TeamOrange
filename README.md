@@ -10,14 +10,14 @@ cd TeamOrange
 npm install
 ```
 
-# Development
+# Development Build
 
 ```
-npm dev
+npm run build_debug
 ```
 
-# Build
+# Release Build
 
 ```
-npm build
+npm run build_release
 ```
