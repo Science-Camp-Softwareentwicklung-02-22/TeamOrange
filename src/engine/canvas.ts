@@ -8,7 +8,3 @@ export function setup_canvas(): CanvasRenderingContext2D {
     return ctx;
 }
 
-export function draw_quad(ctx: Ctx): void {
-    ctx.fillStyle = "green";
-    ctx.fillRect(50, 50, 100, 100);
-}
