@@ -1,4 +1,4 @@
-name: Build TypeScript
+name: Build webpack
 
 on:
   push:
@@ -15,5 +15,5 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Build TypeScript
+      - name: Build webpack
         run: npm run build_release
