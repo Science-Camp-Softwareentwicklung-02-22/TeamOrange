@@ -1,59 +1,59 @@
-//controll player 
+//controll player
 
-var controller, loop, player;
-
-player={
-    height:32,
-    jumping=true,
-    width=20,
-    x:144,
+let player = {
+    height: 32,
+    jumping: true,
+    width: 20,
+    x: 144,
     x_velocity: 0,
-    y_velocity: 0,    
+    y_velocity: 0,
 };
 
-controller= {
-    left:false,
+let controller = {
+    left: false,
     right: false,
-    up: false, 
-    
-    keyListener: function(event){
-        var key_state= (event.type == "keydown")?true:false;
-
-        switch(event.keyCode){
-            case37:
-            controller.left=key_state;
-            break;
-            case39:
-            controller.right=key_state;
-            break;
-            case38:
-            controller.up=key_state;
-            break;
-        }
-    }
+    up: false,
 };
 
-loop= function(){
-    if (controller.up && player.jumping == false) {
-        player.y_velocity-=20;
-        player.jumping=true;
-    }
-    if (controller.left){
-        player.x_velocity-=0.5;
-    }
+function lauscher(event: KeyboardEvent) {
+    const key_state = event.type == "keydown" ? true : false;
 
-    if (controller.right){
-        player.x_velocity += 0,5;
+    switch (event.code) {
+        case "KeyA":
+            controller.left = key_state;
+            break;
+        case "KeyD":
+            controller.right = key_state;
+            break;
+        case "KeyW":
+            controller.up = key_state;
+            break;
     }
-
 }
+function loop() {
+    if (controller.up && player.jumping == false) {
+        player.y_velocity -= 20;
+        player.jumping = true;
+    }
+    if (controller.left) {
+        player.x_velocity -= 0.5;
+    }
 
-player.y_velocity += 1.5;
-player.x_velocity += player.x_velocity;
-player.y_velocity += player.y_velocity;
+    if (controller.right) {
+        (player.x_velocity += 0), 5;
+    }
 
+    player.y_velocity += 1.5;
+    player.x_velocity += player.x_velocity;
+    player.y_velocity += player.y_velocity;
+    player.x_velocity *= 0.9;
+    player.y_velocity *= 0.9;
 
+    if (player.x > 320) {
+        player.x = -32;
+    }
 
- window.addEventListener("keydown",controller.keyListener);
- window.addEventListener("keyup",controller.keyListener);
- window.requestAnimationFrame(loop);
+    window.addEventListener("keydown", lauscher);
+    window.addEventListener("keyup", lauscher);
+    window.requestAnimationFrame(loop);
+}
