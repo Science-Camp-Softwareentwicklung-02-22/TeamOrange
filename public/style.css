@@ -6,14 +6,3 @@ body {
     font-size: 30px;
     text-align: center;
 }
-
-#character {
-    width: 90px;
-    height: 90px;
-    background-color: green;
-    border-radius: 50%;
-    position: relative;
-    top: 575px;
-    left: 327px;
-    z-index: 5;
-}

@@ -1,4 +1,4 @@
-//controll player
+// control player
 
 let player = {
     height: 32,
