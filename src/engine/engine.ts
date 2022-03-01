@@ -13,7 +13,7 @@ export function render(ctx: Ctx): void {
         shape.draw(ctx);
 }
 
-export function start(update_callback: () => void): Ctx {
+export function start(update_callback: () => void): void {
     let ctx = setup_canvas();
     // 60fps
     setInterval(() => {
@@ -21,5 +21,4 @@ export function start(update_callback: () => void): Ctx {
         update_callback();
         render(ctx);
     }, 1000 / 60);
-    return ctx;
 }

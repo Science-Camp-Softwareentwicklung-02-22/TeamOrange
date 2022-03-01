@@ -23,6 +23,6 @@ class Player {
 
 let p = new Player(100, 100);
 
-let ctx = start(() => {
+start(() => {
     p.move();
 });

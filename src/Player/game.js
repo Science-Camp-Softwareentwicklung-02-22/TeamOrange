@@ -15,7 +15,7 @@ function moveRight() {
     let left = parseInt(
         window.getComputedStyle(character).getPropertyValue("left")
     );
-    if (left > 0.01 ){
+    if (left > 0.01) {
         character.style.left = left + speed + "px";
     }
 }
