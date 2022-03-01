@@ -1,1 +1,3 @@
-console.log("Hello Test!");
+import { setup_canvas } from "./canvas";
+
+setup_canvas();
