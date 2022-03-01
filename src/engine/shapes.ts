@@ -1,6 +1,6 @@
 import { Ctx } from "./canvas";
 
-abstract class Shape {
+export abstract class Shape {
     constructor(ctx: Ctx, x: number, y: number, color: string, alpha: number, border_color: string) {
         this.m_ctx = ctx;
         this.m_x = x;
@@ -30,7 +30,7 @@ abstract class Shape {
     protected m_border_color: string;
 }
 
-class Circle extends Shape {
+export class Circle extends Shape {
     constructor(ctx: Ctx, x: number, y: number, color: string, alpha: number, border_color: string, radius: number) {
         super(ctx, x, y, color, alpha, border_color);
         this.m_radius = radius;
@@ -56,7 +56,7 @@ class Circle extends Shape {
     private m_radius: number;
 }
 
-class Rectangle extends Shape {
+export class Rectangle extends Shape {
     constructor(ctx: Ctx, x: number, y: number, color: string, alpha: number, border_color: string, width: number, height: number) {
         super(ctx, x, y, color, alpha, border_color);
         this.m_width = width;
