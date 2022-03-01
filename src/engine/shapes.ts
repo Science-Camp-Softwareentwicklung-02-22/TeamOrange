@@ -1,8 +1,7 @@
 import { Ctx } from "./canvas";
 
 export abstract class Shape {
-    constructor(ctx: Ctx, x: number, y: number, color: string, alpha: number, border_color: string) {
-        this.m_ctx = ctx;
+    constructor(x: number, y: number, color: string, alpha: number, border_color: string) {
         this.m_x = x;
         this.m_y = y;
         this.m_color = color;
@@ -10,7 +9,7 @@ export abstract class Shape {
         this.m_border_color = border_color;
     }
 
-    abstract draw(): void;
+    abstract draw(ctx: Ctx): void;
 
     set_color(color: string): void { this.m_color = color; }
     set_border_color(border_color: string): void { this.m_border_color = border_color; }
@@ -20,7 +19,6 @@ export abstract class Shape {
         this.m_y = y;
     }
 
-    protected m_ctx: Ctx;
     protected m_x: number;
     protected m_y: number;
     // "" -> invisible
@@ -31,25 +29,25 @@ export abstract class Shape {
 }
 
 export class Circle extends Shape {
-    constructor(ctx: Ctx, x: number, y: number, color: string, alpha: number, border_color: string, radius: number) {
-        super(ctx, x, y, color, alpha, border_color);
+    constructor(x: number, y: number, color: string, alpha: number, border_color: string, radius: number) {
+        super(x, y, color, alpha, border_color);
         this.m_radius = radius;
     }
 
-    draw(): void {
+    draw(ctx: Ctx): void {
         // set path
-        this.m_ctx.beginPath();
-        this.m_ctx.arc(this.m_x, this.m_y, this.m_radius, 0, Math.PI * 2);
+        ctx.beginPath();
+        ctx.arc(this.m_x, this.m_y, this.m_radius, 0, Math.PI * 2);
 
         // draw path
-        this.m_ctx.globalAlpha = this.m_alpha;
+        ctx.globalAlpha = this.m_alpha;
         if (this.m_color) {
-            this.m_ctx.fillStyle = this.m_color;
-            this.m_ctx.fill();
+            ctx.fillStyle = this.m_color;
+            ctx.fill();
         }
         if (this.m_border_color) {
-            this.m_ctx.strokeStyle = this.m_border_color;
-            this.m_ctx.stroke();
+            ctx.strokeStyle = this.m_border_color;
+            ctx.stroke();
         }
     }
 
@@ -57,25 +55,25 @@ export class Circle extends Shape {
 }
 
 export class Rectangle extends Shape {
-    constructor(ctx: Ctx, x: number, y: number, color: string, alpha: number, border_color: string, width: number, height: number) {
-        super(ctx, x, y, color, alpha, border_color);
+    constructor(x: number, y: number, color: string, alpha: number, border_color: string, width: number, height: number) {
+        super(x, y, color, alpha, border_color);
         this.m_width = width;
         this.m_height = height;
     }
 
-    draw(): void {
+    draw(ctx: Ctx): void {
         // set path
-        this.m_ctx.fillRect(this.m_x, this.m_y, this.m_width, this.m_height);
+        ctx.fillRect(this.m_x, this.m_y, this.m_width, this.m_height);
 
         // draw path
-        this.m_ctx.globalAlpha = this.m_alpha;
+        ctx.globalAlpha = this.m_alpha;
         if (this.m_color) {
-            this.m_ctx.fillStyle = this.m_color;
-            this.m_ctx.fill();
+            ctx.fillStyle = this.m_color;
+            ctx.fill();
         }
         if (this.m_border_color) {
-            this.m_ctx.strokeStyle = this.m_border_color;
-            this.m_ctx.stroke();
+            ctx.strokeStyle = this.m_border_color;
+            ctx.stroke();
         }
     }
 
