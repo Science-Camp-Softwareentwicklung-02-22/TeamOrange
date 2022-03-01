@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import {Ctx, setup_canvas} from "./canvas";
-
-export function render(ctx: Ctx): void {}
-=======
 import { Ctx, setup_canvas } from "./canvas";
 import { Shape } from "./shapes";
 
@@ -17,7 +12,6 @@ export function render(ctx: Ctx): void {
     for (let shape of g_shapes)
         shape.draw(ctx);
 }
->>>>>>> f1e119342ba98f22be467120ea9c69160e76d097
 
 export function start(update_callback: () => void): Ctx {
     let ctx = setup_canvas();
