@@ -1,5 +1,6 @@
 import { Ctx } from "./canvas";
 import { Shape } from "./shapes";
+import * as math from "mathjs";
 
 export class Renderer {
     constructor(canvas_id: string, update_callback: () => void) {
@@ -10,6 +11,12 @@ export class Renderer {
             update_callback();
             this.render();
         }, 1000 / 60);
+    }
+
+    add_mousedown_listener(callback: (pos: math.Matrix) => void) {
+        this.m_ctx.canvas.addEventListener("mousedown", (event: MouseEvent) => {
+            callback(math.matrix([event.offsetX, event.offsetY]));
+        });
     }
 
     // TODO: add remove shape method
