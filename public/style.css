@@ -69,7 +69,7 @@ body {
   --c3: white;
   --bg: var(--c3);
   --d: 4000ms;
-  --e: cubic-bezier(0.76, 0, 0.ww24, 1);
+  --e: cubic-bezier(0.76, 0, 0.24, 1);
   
   background-color: var(--bg);
   background-image:
