@@ -86,7 +86,13 @@ export class Player {
                     ) as math.Matrix;
                     break;
             }
+            //Bullets
+            //
+            //
+            //
         });
     }
-    public update() {}
+    public update() {
+        this.m_circle = new Circle(this.m_pos, "red", 1, "blue", 1, 100);
+    }
 }
