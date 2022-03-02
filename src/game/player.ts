@@ -1,6 +1,6 @@
 // control player
-import {g_shapes, start} from "../engine/engine";
-import {Shape, Circle, Rectangle} from "../engine/shapes";
+import {Circle, Rectangle} from "../engine/shapes";
+import {Renderer} from "../engine/renderer";
 
 // g_shapes.push(new Circle(ctx, 150, 50, "red", 1, "blue", 100));
 const speed = "0";
@@ -9,12 +9,14 @@ export class Player {
     private m_circle: Circle;
     private m_x: number;
     private m_y: number;
+    private m_renderer: Renderer;
 
-    constructor(x: number, y: number) {
+    constructor(renderer: Renderer, x: number, y: number) {
         this.m_circle = new Circle(x, y, "red", 1, "blue", 100);
-        this.m_x = 0;
-        this.m_y = 0;
-        g_shapes.push(this.m_circle);
+        this.m_x = x;
+        this.m_y = y;
+        this.m_renderer = renderer;
+        this.m_renderer.add_shape(this.m_circle);
     }
     public update() {
         document.addEventListener("keydown", (event) => {

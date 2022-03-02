@@ -1,10 +1,12 @@
-import {g_shapes, start} from "./engine/engine";
-import {Shape, Circle, Rectangle} from "./engine/shapes";
+import { Renderer } from "./engine/renderer";
+import { Player } from "./game/player";
 
-// g_shapes.push(new Circle(ctx, 150, 50, "red", 1, "blue", 100));
-import {Player} from "./game/player";
-let p = new Player(100, 100);
+let g_players: Player[] = [];
 
-start(() => {
-    p.update();
-});
+let g_renderer = new Renderer("play_canvas", () => {
+    for (let player of g_players)
+        player.update()
+})
+
+g_players.push(new Player(g_renderer, 100, 100));
+
