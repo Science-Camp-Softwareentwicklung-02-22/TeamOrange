@@ -1,9 +1,11 @@
 // control player
 
-import { Circle, Rectangle } from "../engine/shapes";
-import { Renderer } from "../engine/renderer";
+import {Circle, Rectangle} from "../engine/shapes";
+import {Renderer} from "../engine/renderer";
 import * as math from "mathjs";
+import {boolean, e} from "mathjs";
 
+// gucken was passiert wenn knopof gedrückt ist; w
 export class Player {
     private m_renderer: Renderer;
 
@@ -26,33 +28,65 @@ export class Player {
         this.m_renderer.add_shape(this.m_circle);
 
         document.addEventListener("keydown", (event) => {
-            if (event.repeat)
-                return;
+            if (event.repeat) return;
             if (event.key === "d") {
-                this.m_pos = math.add(this.m_pos, math.multiply(this.m_right, this.m_acc)) as math.Matrix;
+                this.m_pos = math.add(
+                    this.m_pos,
+                    math.multiply(this.m_right, this.m_acc)
+                ) as math.Matrix;
                 this.m_circle.set_pos(this.m_pos);
-
             }
+            // schräg laufen muss noch eingebaut werden
             if (event.key === "a") {
-                this.m_pos = math.add(this.m_pos, math.multiply(this.m_left, this.m_acc)) as math.Matrix;
+                this.m_pos = math.add(
+                    this.m_pos,
+                    math.multiply(this.m_left, this.m_acc)
+                ) as math.Matrix;
                 this.m_circle.set_pos(this.m_pos);
             }
             if (event.key === "s") {
-                this.m_pos = math.add(this.m_pos, math.multiply(this.m_down, this.m_acc)) as math.Matrix;
+                this.m_pos = math.add(
+                    this.m_pos,
+                    math.multiply(this.m_down, this.m_acc)
+                ) as math.Matrix;
                 this.m_circle.set_pos(this.m_pos);
             }
             if (event.key === "w") {
-                this.m_pos = math.add(this.m_pos, math.multiply(this.m_up, this.m_acc)) as math.Matrix;
+                this.m_pos = math.add(
+                    this.m_pos,
+                    math.multiply(this.m_up, this.m_acc)
+                ) as math.Matrix;
                 this.m_circle.set_pos(this.m_pos);
             }
         });
         document.addEventListener("keyup", (event) => {
-            if (event.key === "d") {
-
-
+            switch (event.key) {
+                case "w":
+                    this.m_pos = math.multiply(
+                        this.m_pos,
+                        this.m_vel
+                    ) as math.Matrix;
+                    break;
+                case "a":
+                    this.m_pos = math.multiply(
+                        this.m_pos,
+                        this.m_vel
+                    ) as math.Matrix;
+                    break;
+                case "s":
+                    this.m_pos = math.multiply(
+                        this.m_pos,
+                        this.m_vel
+                    ) as math.Matrix;
+                    break;
+                case "d":
+                    this.m_pos = math.multiply(
+                        this.m_pos,
+                        this.m_vel
+                    ) as math.Matrix;
+                    break;
             }
         });
     }
-    public update() {
-    }
+    public update() {}
 }

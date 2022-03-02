@@ -2,7 +2,13 @@ import { Ctx } from "./canvas";
 import * as math from "mathjs";
 
 export abstract class Shape {
-    constructor(pos: math.Matrix, color: string, alpha: number, border_color: string, line_width: number) {
+    constructor(
+        pos: math.Matrix,
+        color: string,
+        alpha: number,
+        border_color: string,
+        line_width: number
+    ) {
         this.m_pos = pos;
         this.m_color = color;
         this.m_alpha = alpha;
@@ -51,17 +57,25 @@ export class Circle extends Shape {
         alpha: number,
         border_color: string,
         line_width: number,
-        radius: number) {
-
+        radius: number
+    ) {
         super(pos, color, alpha, border_color, line_width);
         this.m_radius = radius;
     }
 
-    public set_radius(radius: number) { this.m_radius = radius; }
+    public set_radius(radius: number) {
+        this.m_radius = radius;
+    }
 
     public draw(ctx: Ctx): void {
         ctx.beginPath();
-        ctx.arc(this.m_pos.get([0]), this.m_pos.get([1]), this.m_radius, 0, Math.PI * 2);
+        ctx.arc(
+            this.m_pos.get([0]),
+            this.m_pos.get([1]),
+            this.m_radius,
+            0,
+            Math.PI * 2
+        );
 
         this.draw_path(ctx);
     }
@@ -91,16 +105,23 @@ export class Rectangle extends Shape {
         alpha: number,
         border_color: string,
         line_width: number,
-        size: math.Matrix) {
-
+        size: math.Matrix
+    ) {
         super(pos, color, alpha, border_color, line_width);
         this.m_size = size;
     }
 
-    public set_size(size: math.Matrix) { this.m_size = size; }
+    public set_size(size: math.Matrix) {
+        this.m_size = size;
+    }
 
     public draw(ctx: Ctx): void {
-        ctx.fillRect(this.m_pos.get([0]), this.m_pos.get([1]), this.m_size.get([0]), this.m_size.get([1]));
+        ctx.fillRect(
+            this.m_pos.get([0]),
+            this.m_pos.get([1]),
+            this.m_size.get([0]),
+            this.m_size.get([1])
+        );
 
         this.draw_path(ctx);
     }
