@@ -21,7 +21,7 @@ export class Player {
     constructor(renderer: Renderer, pos: math.Matrix) {
         this.m_pos = pos;
         this.m_vel = math.matrix([0, 0]);
-        this.m_circle = new Circle(this.m_pos, "red", 1, "blue", 100);
+        this.m_circle = new Circle(this.m_pos, "red", 1, "blue", 1, 100);
         this.m_renderer = renderer;
         this.m_renderer.add_shape(this.m_circle);
 
