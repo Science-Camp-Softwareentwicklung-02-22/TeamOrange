@@ -1,6 +1,7 @@
 // control player
 import {Circle, Rectangle} from "../engine/shapes";
 import {Renderer} from "../engine/renderer";
+import { Matrix, matrix } from "mathjs";
 
 // g_shapes.push(new Circle(ctx, 150, 50, "red", 1, "blue", 100));
 
@@ -9,7 +10,7 @@ export class Player {
     private m_x: number;
     private m_y: number;
     private m_renderer: Renderer;
-    private m_speed: 1;
+    private m_speed: number = 1;
 
     constructor(renderer: Renderer, x: number, y: number) {
         this.m_circle = new Circle(x, y, "red", 1, "blue", 100);
@@ -21,7 +22,9 @@ export class Player {
     public update() {
         document.addEventListener("keydown", (event) => {
             if (event.key === "d") {
-                const right = (this.m_x += this.m_speed);
+                //Vectors needed 
+                this.m_x.get([1])
+                this.m_pos.get([0])
                 this.m_circle.set_location(this.m_x, this.m_y);
             }
             if (event.key === "a") {
@@ -37,5 +40,11 @@ export class Player {
                 this.m_circle.set_location(this.m_x, this.m_y);
             }
         });
+        document.addEventListener("keyup" , (event) => {
+            if (event.key === "d"){
+
+
+            }
+        }
     }
 }
