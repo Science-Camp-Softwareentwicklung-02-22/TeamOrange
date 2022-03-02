@@ -27,72 +27,80 @@ export class Player {
         this.m_renderer = renderer;
         this.m_renderer.add_shape(this.m_circle);
 
+        // switch
+        // m.pos zu m. vel
+        // unterer bereich statt add substrakt
+        // update --> m pos zu set pos
+
         document.addEventListener("keydown", (event) => {
-            if (event.repeat) return;
-            if (event.key === "d") {
-                this.m_pos = math.add(
-                    this.m_pos,
-                    math.multiply(this.m_right, this.m_acc)
-                ) as math.Matrix;
-                this.m_circle.set_pos(this.m_pos);
-            }
-            // schräg laufen muss noch eingebaut werden
-            if (event.key === "a") {
-                this.m_pos = math.add(
-                    this.m_pos,
-                    math.multiply(this.m_left, this.m_acc)
-                ) as math.Matrix;
-                this.m_circle.set_pos(this.m_pos);
-            }
-            if (event.key === "s") {
-                this.m_pos = math.add(
-                    this.m_pos,
-                    math.multiply(this.m_down, this.m_acc)
-                ) as math.Matrix;
-                this.m_circle.set_pos(this.m_pos);
-            }
-            if (event.key === "w") {
-                this.m_pos = math.add(
-                    this.m_pos,
-                    math.multiply(this.m_up, this.m_acc)
-                ) as math.Matrix;
-                this.m_circle.set_pos(this.m_pos);
-            }
-        });
-        document.addEventListener("keyup", (event) => {
             switch (event.key) {
-                case "w":
-                    this.m_pos = math.multiply(
-                        this.m_pos,
-                        this.m_vel
-                    ) as math.Matrix;
-                    break;
-                case "a":
-                    this.m_pos = math.multiply(
-                        this.m_pos,
-                        this.m_vel
-                    ) as math.Matrix;
-                    break;
-                case "s":
-                    this.m_pos = math.multiply(
-                        this.m_pos,
-                        this.m_vel
-                    ) as math.Matrix;
-                    break;
                 case "d":
-                    this.m_pos = math.multiply(
-                        this.m_pos,
-                        this.m_vel
+                    this.m_vel = this.m_vel = math.add(
+                        this.m_vel,
+                        math.multiply(this.m_right, this.m_acc)
                     ) as math.Matrix;
+                    this.m_circle.set_pos(this.m_pos);
                     break;
+                case "a": {
+                    this.m_vel = math.add(
+                        this.m_vel,
+                        math.multiply(this.m_left, this.m_acc)
+                    ) as math.Matrix;
+                    this.m_circle.set_pos(this.m_pos);
+                    break;
+                }
+                case "s": {
+                    this.m_vel = math.add(
+                        this.m_vel,
+                        math.multiply(this.m_down, this.m_acc)
+                    ) as math.Matrix;
+                    this.m_circle.set_pos(this.m_pos);
+                    break;
+                }
+                case "w": {
+                    this.m_pos = math.add(
+                        this.m_vel,
+                        math.multiply(this.m_up, this.m_acc)
+                    ) as math.Matrix;
+                    this.m_circle.set_pos(this.m_pos);
+                    break;
+                }
             }
-            //Bullets
-            //
-            //
-            //
+            document.addEventListener("keyup", (event) => {
+                switch (event.key) {
+                    case "w":
+                        this.m_vel = math.subtract(
+                            this.m_vel,
+                            math.multiply(this.m_up, this.m_acc)
+                        ) as math.Matrix;
+                        break;
+                    case "a":
+                        this.m_vel = math.subtract(
+                            this.m_vel,
+                            math.multiply(this.m_left, this.m_acc)
+                        ) as math.Matrix;
+                        break;
+                    case "s":
+                        this.m_vel = math.subtract(
+                            this.m_vel,
+                            math.multiply(this.m_down, this.m_acc)
+                        ) as math.Matrix;
+                        break;
+                    case "d":
+                        this.m_vel = math.subtract(
+                            this.m_vel,
+                            math.multiply(this.m_right, this.m_acc)
+                        ) as math.Matrix;
+                        break;
+                }
+                //Bullets
+                //
+                //
+                //
+            });
         });
     }
     public update() {
-        this.m_circle = new Circle(this.m_pos, "red", 1, "blue", 1, 100);
+        this.m_pos = math.add(this.m_pos, this.m_vel) as math.Matrix;
     }
 }
