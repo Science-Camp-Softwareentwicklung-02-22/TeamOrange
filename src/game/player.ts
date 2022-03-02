@@ -21,7 +21,7 @@ export class Player {
     public update() {
         document.addEventListener("keydown", (event) => {
             if (event.key === "d") {
-                this.m_x += this.m_speed;
+                const right = (this.m_x += this.m_speed);
                 this.m_circle.set_location(this.m_x, this.m_y);
             }
             if (event.key === "a") {
