@@ -1,4 +1,5 @@
 // control player
+
 import { Circle, Rectangle } from "../engine/shapes";
 import { Renderer } from "../engine/renderer";
 import * as math from "mathjs";
@@ -30,6 +31,7 @@ export class Player {
             if (event.key === "d") {
                 this.m_pos = math.add(this.m_pos, math.multiply(this.m_right, this.m_acc)) as math.Matrix;
                 this.m_circle.set_pos(this.m_pos);
+
             }
             if (event.key === "a") {
                 this.m_pos = math.add(this.m_pos, math.multiply(this.m_left, this.m_acc)) as math.Matrix;
@@ -42,6 +44,12 @@ export class Player {
             if (event.key === "w") {
                 this.m_pos = math.add(this.m_pos, math.multiply(this.m_up, this.m_acc)) as math.Matrix;
                 this.m_circle.set_pos(this.m_pos);
+            }
+        });
+        document.addEventListener("keyup", (event) => {
+            if (event.key === "d") {
+
+
             }
         });
     }
