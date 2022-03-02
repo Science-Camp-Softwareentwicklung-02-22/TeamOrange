@@ -1,4 +1,5 @@
 import { Ctx } from "./canvas";
+import * as mathjs from "mathjs";
 
 export abstract class Shape {
     constructor(x: number, y: number, color: string, alpha: number, border_color: string) {
@@ -79,4 +80,20 @@ export class Rectangle extends Shape {
 
     private m_width: number;
     private m_height: number;
+}
+
+export class Line extends Shape {
+    constructor(x: number, y: number, color: string, alpha: number, border_color: string) {
+        super(x, y, color, alpha, border_color);
+        this.m_incl_x = 0;
+        this.m_incl_y = 0;
+    }
+
+    draw(ctx: Ctx): void {
+
+    }
+
+    // ray inclination vector
+    m_incl_x: number;
+    m_incl_y: number;
 }
