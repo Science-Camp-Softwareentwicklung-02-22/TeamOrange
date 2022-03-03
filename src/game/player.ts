@@ -1,7 +1,8 @@
+import * as math from "mathjs";
+
 import { Circle } from "../engine/shapes";
 import { Renderer } from "../engine/renderer";
-import { g_socket, RawMsg, RepositionMsg } from "../engine/socket";
-import * as math from "mathjs";
+import { send_msg } from "../engine/socket";
 
 // control player
 export class Player {
@@ -26,8 +27,16 @@ export class Player {
         this.m_renderer = renderer;
         this.m_name = name;
         this.m_pos = pos;
-        this.m_circle = new Circle(this.m_pos, "red", 1, "blue", 1, 50);
+        this.m_circle = new Circle(this.m_pos, "lightblue", 1, "blue", 1, 50);
         this.m_renderer.add_shape(this.m_circle);
+
+        send_msg({
+            type: "player_connected",
+            payload: {
+                name: this.m_name,
+                pos: [this.m_pos.get([0]), this.m_pos.get([1])],
+            },
+        });
 
         // increase velocity when pressing
         document.addEventListener("keydown", (event) => {
@@ -114,14 +123,13 @@ export class Player {
 
     private propagate_movement() {
         let new_pos = math.add(this.m_pos, this.m_vel) as math.Matrix;
-        let msg: RawMsg = {
+        send_msg({
             type: "reposition",
             payload: {
-                name: "m_name",
+                name: this.m_name,
                 pos: [new_pos.get([0]), new_pos.get([1])],
                 vel: [this.m_vel.get([0]), this.m_vel.get([1])],
             },
-        };
-        g_socket.emit("message", JSON.stringify(msg));
+        });
     }
 }

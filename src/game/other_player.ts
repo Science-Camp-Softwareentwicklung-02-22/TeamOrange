@@ -1,10 +1,10 @@
-import { Circle } from "../engine/shapes";
-import { Renderer } from "../engine/renderer";
-import { g_socket, RawMsg } from "../engine/socket";
 import * as math from "mathjs";
 
+import { Circle } from "../engine/shapes";
+import { Renderer } from "../engine/renderer";
+
 // display other player
-class OtherPlayer {
+export class OtherPlayer {
     private m_renderer: Renderer;
     private m_name: string;
 
@@ -18,7 +18,7 @@ class OtherPlayer {
         this.m_renderer = renderer;
         this.m_name = name;
         this.m_pos = pos;
-        this.m_circle = new Circle(this.m_pos, "red", 1, "blue", 1, 50);
+        this.m_circle = new Circle(this.m_pos, "orange", 1, "blue", 1, 50);
         this.m_renderer.add_shape(this.m_circle);
     }
 
@@ -37,16 +37,8 @@ class OtherPlayer {
 }
 
 export class OtherPlayerHandler {
-    private m_other_players: Map<string, OtherPlayer> = new Map<string, OtherPlayer>();
 
-    constructor() {
-        g_socket.on("message", msg => {
-            let loaded_msg: RawMsg = JSON.parse(msg);
-            switch (loaded_msg.type) {
-                case "reposition":
-                    break;
-                // ignore wrong inputs
-            }
-        })
+    constructor(renderer: Renderer) {
     }
+
 }
