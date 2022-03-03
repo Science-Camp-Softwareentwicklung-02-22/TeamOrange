@@ -1,5 +1,5 @@
-import { Circle } from "../engine/shapes";
-import { Renderer } from "../engine/renderer";
+import {Ray, Circle} from "../engine/shapes";
+import {Renderer} from "../engine/renderer";
 import * as math from "mathjs";
 
 // control player
@@ -13,6 +13,7 @@ export class Player {
     private m_acc: number = 5;
 
     private m_circle: Circle;
+    // for mouse
 
     // directional vectors
     private m_up: math.Matrix = math.matrix([0, -1]);
@@ -28,8 +29,7 @@ export class Player {
 
         // increase velocity when pressing
         document.addEventListener("keydown", (event) => {
-            if (event.repeat)
-                return;
+            if (event.repeat) return;
             switch (event.code) {
                 case "KeyD":
                     this.m_vel = math.add(
@@ -92,6 +92,10 @@ export class Player {
                     break;
                 }
             }
+        });
+        // adding ray shooting to the game
+        document.addEventListener("click", (e) => {
+            m_point_at;
         });
     }
 

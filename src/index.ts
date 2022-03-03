@@ -1,7 +1,7 @@
-import { Renderer } from "./engine/renderer";
-import { Player } from "./game/player";
-import { Ray, Circle } from "./engine/shapes";
-import * as math from "mathjs"
+import {Renderer} from "./engine/renderer";
+import {Player} from "./game/player";
+import {Ray, Circle} from "./engine/shapes";
+import * as math from "mathjs";
 import * as socketio from "socket.io-client";
 
 let socket = socketio.io();
@@ -12,8 +12,7 @@ let r = new Ray(math.matrix([50, 50]), "orange", 1, 5, math.matrix([0, 1]));
 let c = new Circle(math.matrix([300, 300]), "lightblue", 1, "black", 1, 50);
 
 let g_renderer = new Renderer("play_canvas", () => {
-    for (let player of g_players)
-        player.update()
+    for (let player of g_players) player.update();
     let length = c.ray_intersect(r);
     r.set_length(length == -1 ? 100000 : length);
 });
