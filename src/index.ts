@@ -1,30 +1,59 @@
+import * as math from "mathjs"
+
 import { Renderer } from "./engine/renderer";
 import { Player } from "./game/player";
-import { Ray, Circle } from "./engine/shapes";
-import * as math from "mathjs"
-import * as socketio from "socket.io-client";
+import { set_on_msg, PlayerConnected, PlayerDisConnected, RepositionMsg, ShootMsg } from "./engine/socket";
+import { OtherPlayer } from "./game/other_player";
 
-let socket = socketio.io();
+function setup() {
+    let player: Player | null = null;
+    let other_players: Map<string, OtherPlayer> = new Map<string, OtherPlayer>();
 
-let g_players: Player[] = [];
+    let renderer = new Renderer("play_canvas", () => {
+        player?.update()
 
-let r = new Ray(math.matrix([50, 50]), "orange", 1, 5, math.matrix([0, 1]));
-let c = new Circle(math.matrix([300, 300]), "lightblue", 1, "black", 1, 50);
+        for (let other_player of other_players) {
+            other_player[1].update();
+        }
+    });
 
-let g_renderer = new Renderer("play_canvas", () => {
-    for (let player of g_players)
-        player.update()
-    let length = c.ray_intersect(r);
-    r.set_length(length == -1 ? 100000 : length);
-});
-g_renderer.add_mousedown_listener((pos: math.Matrix) => {
-    // c.set_pos(pos);
-    r.point_at(pos);
-});
+    set_on_msg(msg => {
+        switch (msg.type) {
+            case "reposition": {
+                let payload = msg.payload as RepositionMsg;
+                // either create new player or adjust existing one
+                if (!other_players.has(payload.name)) {
+                    other_players.set(payload.name, new OtherPlayer(renderer, payload.name, math.matrix(payload.pos)))
+                }
+                else {
+                    other_players.get(payload.name)?.set_pos(math.matrix(payload.pos));
+                    other_players.get(payload.name)?.set_vel(math.matrix(payload.vel));
+                }
+                break;
+            }
+            case "shoot": {
+                let payload = msg.payload as ShootMsg;
+                // TODO: implement
+                break;
+            }
+            case "player_connected": {
+                let payload = msg.payload as PlayerConnected;
+                // skip already existing players
+                if (other_players.has(payload.name))
+                    break;
+                other_players.set(payload.name, new OtherPlayer(renderer, payload.name, math.matrix(payload.pos)))
+                break;
+            }
+            case "player_disconnected": {
+                let payload = msg.payload as PlayerDisConnected;
+                other_players.delete(payload.name);
+                break;
+            }
+            // ignore wrong inputs
+        }
+    })
 
-g_players.push(new Player(g_renderer, math.matrix([150, 50])));
+    player = new Player(renderer, `Chris ${Math.random()}`, math.matrix([150, 50]));
+}
 
-g_renderer.add_shape(r);
-g_renderer.add_shape(c);
-
-socket.emit("message", "I like cheese.");
+setup();
