@@ -7,7 +7,7 @@ import { OtherPlayer } from "./game/other_player";
 
 function setup() {
     let player: Player | null = null;
-    let other_players: Map<string, OtherPlayer> = new Map<string, OtherPlayer>();
+    let other_players = new Map<string, OtherPlayer>();
 
     let renderer = new Renderer("play_canvas", () => {
         player?.update()
