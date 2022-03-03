@@ -2,6 +2,9 @@ import { Renderer } from "./engine/renderer";
 import { Player } from "./game/player";
 import { Ray, Circle } from "./engine/shapes";
 import * as math from "mathjs"
+import * as socketio from "socket.io-client";
+
+let socket = socketio.io();
 
 let g_players: Player[] = [];
 
@@ -23,3 +26,5 @@ g_players.push(new Player(g_renderer, math.matrix([150, 50])));
 
 g_renderer.add_shape(r);
 g_renderer.add_shape(c);
+
+socket.emit("message", "I like cheese.");
