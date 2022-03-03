@@ -1,6 +1,6 @@
 import * as math from "mathjs";
 
-import { Circle } from "../engine/shapes";
+import { Circle, Ray } from "../engine/shapes";
 import { Renderer } from "../engine/renderer";
 import { send_msg } from "../engine/socket";
 
@@ -16,7 +16,7 @@ export class Player {
     private m_acc: number = 5;
 
     private m_circle: Circle;
-
+    // for mouse
     // directional vectors
     private m_up: math.Matrix = math.matrix([0, -1]);
     private m_down: math.Matrix = math.matrix([0, 1]);
@@ -40,8 +40,7 @@ export class Player {
 
         // increase velocity when pressing
         document.addEventListener("keydown", (event) => {
-            if (event.repeat)
-                return;
+            if (event.repeat) return;
             switch (event.code) {
                 case "KeyD":
                     this.m_vel = math.add(
@@ -112,6 +111,15 @@ export class Player {
                     break;
                 }
             }
+        });
+        // adding ray shooting to the game
+        renderer.add_mousedown_listener((pos) => {
+            //inclination for the mouse shot
+            let inclination = math.subtract(pos, this.m_pos) as math.Matrix;
+            //distance max and distance player player
+            // construct a ray
+            let ray = new Ray(this.m_pos, "blue", 1, 1, inclination);
+            this.m_renderer.add_shape(ray);
         });
     }
 
