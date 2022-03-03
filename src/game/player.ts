@@ -1,8 +1,8 @@
 import * as math from "mathjs";
 
-import { Circle, Ray } from "../engine/shapes";
-import { Renderer } from "../engine/renderer";
-import { send_msg } from "../engine/socket";
+import {Circle, Ray} from "../engine/shapes";
+import {Renderer} from "../engine/renderer";
+import {send_msg} from "../engine/socket";
 
 // control player
 export class Player {
