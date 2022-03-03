@@ -28,6 +28,8 @@ export class Player {
 
         // increase velocity when pressing
         document.addEventListener("keydown", (event) => {
+            if (event.repeat)
+                return;
             switch (event.code) {
                 case "KeyD":
                     this.m_vel = math.add(
