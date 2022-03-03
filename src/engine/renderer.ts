@@ -19,9 +19,15 @@ export class Renderer {
         });
     }
 
-    // TODO: add remove shape method
-    public add_shape(shape: Shape) {
-        this.m_shapes.push(shape);
+    public add_shape(shape: Shape): number {
+        let new_key = Math.random();
+        while (this.m_shapes.has(new_key))
+            new_key = Math.random();
+        this.m_shapes.set(new_key, shape);
+        return new_key;
+    }
+    public remove_shape(key: number) {
+        this.m_shapes.delete(key);
     }
 
     private clear_viewport(): void {
@@ -31,7 +37,7 @@ export class Renderer {
     private render(): void {
         this.clear_viewport();
         for (let shape of this.m_shapes)
-            shape.draw(this.m_ctx);
+            shape[1].draw(this.m_ctx);
     }
 
     private setup_canvas(canvas_id: string): CanvasRenderingContext2D {
@@ -43,7 +49,7 @@ export class Renderer {
     }
 
     m_ctx: Ctx;
-    m_shapes: Shape[] = [];
+    m_shapes = new Map<number, Shape>();
 }
 
 

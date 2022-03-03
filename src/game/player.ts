@@ -114,13 +114,16 @@ export class Player {
         });
         // adding ray shooting to the game
         renderer.add_mousedown_listener((pos) => {
-            // inclination for the mouse shot
             let inclination = math.subtract(pos, this.m_pos) as math.Matrix;
-            // distance max and distance player player
-            // construct a ray
             let ray = new Ray(this.m_pos, "blue", 1, 1, inclination);
-            this.m_renderer.add_shape(ray);
+            let key = this.m_renderer.add_shape(ray);
 
+            // evaporate ray
+            setTimeout(() => {
+                this.m_renderer.remove_shape(key);
+            }, 500);
+
+            // tell other players
             this.propagate_shot(inclination);
         });
     }

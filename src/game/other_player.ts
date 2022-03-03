@@ -27,7 +27,11 @@ export class OtherPlayer {
 
     public shoot(inclination: math.Matrix) {
         let ray = new Ray(this.m_pos, "red", 1, 1, inclination);
-        this.m_renderer.add_shape(ray);
+        let key = this.m_renderer.add_shape(ray);
+        // evaporate ray
+        setTimeout(() => {
+            this.m_renderer.remove_shape(key);
+        }, 500);
     }
 
     public update() {
