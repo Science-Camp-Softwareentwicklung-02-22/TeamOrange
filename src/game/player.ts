@@ -1,8 +1,8 @@
 import * as math from "mathjs";
 
-import {Circle, Ray} from "../engine/shapes";
-import {Renderer} from "../engine/renderer";
-import {send_msg} from "../engine/socket";
+import { Circle, Ray } from "../engine/shapes";
+import { Renderer } from "../engine/renderer";
+import { send_msg } from "../engine/socket";
 
 // control player
 export class Player {
@@ -27,7 +27,7 @@ export class Player {
         this.m_renderer = renderer;
         this.m_name = name;
         this.m_pos = pos;
-        this.m_circle = new Circle(this.m_pos, "lightblue", 1, "blue", 1, 50);
+        this.m_circle = new Circle(this.m_pos, "lightblue", 1, "blue", 1, 20);
         this.m_renderer.add_shape(this.m_circle);
 
         send_msg({

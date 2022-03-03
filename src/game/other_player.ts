@@ -18,7 +18,7 @@ export class OtherPlayer {
         this.m_renderer = renderer;
         this.m_name = name;
         this.m_pos = pos;
-        this.m_circle = new Circle(this.m_pos, "orange", 1, "blue", 1, 50);
+        this.m_circle = new Circle(this.m_pos, "orange", 1, "blue", 1, 20);
         this.m_renderer.add_shape(this.m_circle);
     }
 
