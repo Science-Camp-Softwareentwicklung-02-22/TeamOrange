@@ -36,9 +36,3 @@ export class OtherPlayer {
     }
 }
 
-export class OtherPlayerHandler {
-
-    constructor(renderer: Renderer) {
-    }
-
-}
