@@ -1,8 +1,8 @@
-// control player
-import { Circle, Rectangle } from "../engine/shapes";
+import { Circle } from "../engine/shapes";
 import { Renderer } from "../engine/renderer";
 import * as math from "mathjs";
 
+// control player
 export class Player {
     private m_renderer: Renderer;
 
