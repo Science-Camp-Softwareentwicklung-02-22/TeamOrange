@@ -1,6 +1,7 @@
 import {Ray, Circle} from "../engine/shapes";
 import {Renderer} from "../engine/renderer";
 import * as math from "mathjs";
+import {distance} from "mathjs";
 
 // control player
 export class Player {
@@ -14,7 +15,6 @@ export class Player {
 
     private m_circle: Circle;
     // for mouse
-
     // directional vectors
     private m_up: math.Matrix = math.matrix([0, -1]);
     private m_down: math.Matrix = math.matrix([0, 1]);
@@ -94,8 +94,13 @@ export class Player {
             }
         });
         // adding ray shooting to the game
-        document.addEventListener("click", (e) => {
-            m_point_at;
+        renderer.add_mousedown_listener((pos) => {
+            //inclination for the mouse shot
+            let inclination = math.subtract(pos, this.m_pos) as math.Matrix;
+            //distance max and distance player player
+            // construct a ray
+            let ray = new Ray(this.m_pos, "blue", 1, 1, inclination);
+            this.m_renderer.add_shape(ray);
         });
     }
 
