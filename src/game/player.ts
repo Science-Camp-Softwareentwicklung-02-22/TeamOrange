@@ -3,7 +3,7 @@
 import {Circle, Rectangle} from "../engine/shapes";
 import {Renderer} from "../engine/renderer";
 import * as math from "mathjs";
-import {boolean, e} from "mathjs";
+import {boolean, e, subtract} from "mathjs";
 
 // gucken was passiert wenn knopof gedrückt ist; w
 export class Player {
@@ -21,7 +21,8 @@ export class Player {
     private m_left: math.Matrix = math.matrix([-1, 0]);
 
     constructor(renderer: Renderer, pos: math.Matrix) {
-        this.m_pos = pos;
+        this.m_pos = math.matrix([]);
+        // this.m_pos = pos
         this.m_vel = math.matrix([0, 0]);
         this.m_circle = new Circle(this.m_pos, "red", 1, "blue", 1, 100);
         this.m_renderer = renderer;
@@ -35,34 +36,34 @@ export class Player {
         document.addEventListener("keydown", (event) => {
             switch (event.key) {
                 case "d":
-                    this.m_vel = this.m_vel = math.add(
+                    this.m_vel = math.add(
                         this.m_vel,
                         math.multiply(this.m_right, this.m_acc)
                     ) as math.Matrix;
-                    this.m_circle.set_pos(this.m_pos);
                     break;
+                //this.m_circle.set_pos(this.m_pos);
                 case "a": {
                     this.m_vel = math.add(
                         this.m_vel,
                         math.multiply(this.m_left, this.m_acc)
                     ) as math.Matrix;
-                    this.m_circle.set_pos(this.m_pos);
                     break;
+                    //this.m_circle.set_pos(this.m_pos);
                 }
                 case "s": {
                     this.m_vel = math.add(
                         this.m_vel,
                         math.multiply(this.m_down, this.m_acc)
                     ) as math.Matrix;
-                    this.m_circle.set_pos(this.m_pos);
                     break;
+                    //this.m_circle.set_pos(this.m_pos);
                 }
                 case "w": {
-                    this.m_pos = math.add(
+                    this.m_vel = math.add(
                         this.m_vel,
                         math.multiply(this.m_up, this.m_acc)
                     ) as math.Matrix;
-                    this.m_circle.set_pos(this.m_pos);
+                    //this.m_circle.set_pos(this.m_pos);
                     break;
                 }
             }
@@ -70,26 +71,26 @@ export class Player {
                 switch (event.key) {
                     case "w":
                         this.m_vel = math.subtract(
-                            this.m_vel,
-                            math.multiply(this.m_up, this.m_acc)
+                            math.multiply(this.m_up, this.m_acc),
+                            this.m_vel
                         ) as math.Matrix;
                         break;
                     case "a":
                         this.m_vel = math.subtract(
-                            this.m_vel,
-                            math.multiply(this.m_left, this.m_acc)
+                            math.multiply(this.m_left, this.m_acc),
+                            this.m_vel
                         ) as math.Matrix;
                         break;
                     case "s":
                         this.m_vel = math.subtract(
-                            this.m_vel,
-                            math.multiply(this.m_down, this.m_acc)
+                            math.multiply(this.m_down, this.m_acc),
+                            this.m_vel
                         ) as math.Matrix;
                         break;
                     case "d":
                         this.m_vel = math.subtract(
-                            this.m_vel,
-                            math.multiply(this.m_right, this.m_acc)
+                            math.multiply(this.m_right, this.m_acc),
+                            this.m_vel
                         ) as math.Matrix;
                         break;
                 }
@@ -102,5 +103,6 @@ export class Player {
     }
     public update() {
         this.m_pos = math.add(this.m_pos, this.m_vel) as math.Matrix;
+        this.m_circle.set_pos(this.m_pos);
     }
 }

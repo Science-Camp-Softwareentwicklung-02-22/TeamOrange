@@ -9,7 +9,7 @@ let r = new Ray(math.matrix([50, 50]), "orange", 1, 5, math.matrix([0, 1]));
 let c = new Circle(math.matrix([300, 300]), "lightblue", 1, "black", 1, 50);
 
 let g_renderer = new Renderer("play_canvas", () => {
-    for (let player of g_players) update();
+    for (let player of g_players);
     let length = c.ray_intersect(r);
     r.set_length(length == -1 ? 100000 : length);
 });
