@@ -64,9 +64,9 @@ color:#ffffff;
 body {
   --s: 25vmin;
   --p: calc(var(--s) / 2);
-  --c1: #32fc00;
-  --c2: rgb(0, 248, 248);
-  --c3: white;
+  --c1: #4300fc;
+  --c2: rgb(6, 10, 253);
+  --c3: rgb(0, 0, 0);
   --bg: var(--c3);
   --d: 4000ms;
   --e: cubic-bezier(0.76, 0, 0.24, 1);
