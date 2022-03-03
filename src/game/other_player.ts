@@ -1,6 +1,6 @@
 import * as math from "mathjs";
 
-import { Circle } from "../engine/shapes";
+import { Circle, Ray } from "../engine/shapes";
 import { Renderer } from "../engine/renderer";
 
 // display other player
@@ -26,7 +26,8 @@ export class OtherPlayer {
     public set_vel(vel: math.Matrix) { this.m_vel = vel; }
 
     public shoot(inclination: math.Matrix) {
-        // TODO: implement
+        let ray = new Ray(this.m_pos, "red", 1, 1, inclination);
+        this.m_renderer.add_shape(ray);
     }
 
     public update() {

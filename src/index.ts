@@ -18,6 +18,7 @@ function setup() {
     });
 
     set_on_msg(msg => {
+        // TODO: remove code duplication
         switch (msg.type) {
             case "reposition": {
                 let payload = msg.payload as RepositionMsg;
@@ -26,14 +27,25 @@ function setup() {
                     other_players.set(payload.name, new OtherPlayer(renderer, payload.name, math.matrix(payload.pos)))
                 }
                 else {
-                    other_players.get(payload.name)?.set_pos(math.matrix(payload.pos));
-                    other_players.get(payload.name)?.set_vel(math.matrix(payload.vel));
+                    let other_player = other_players.get(payload.name) as OtherPlayer;
+                    other_player.set_pos(math.matrix(payload.pos));
+                    other_player.set_vel(math.matrix(payload.vel));
                 }
                 break;
             }
             case "shoot": {
                 let payload = msg.payload as ShootMsg;
-                // TODO: implement
+                if (!other_players.has(payload.name)) {
+                    let other_player = new OtherPlayer(renderer, payload.name, math.matrix(payload.pos));
+                    other_players.set(payload.name, other_player);
+                    other_player.shoot(math.matrix(payload.incl));
+                }
+                else {
+                    let other_player = other_players.get(payload.name) as OtherPlayer;
+                    other_players.get(payload.name)?.set_pos(math.matrix(payload.pos));
+                    other_players.get(payload.name)?.set_vel(math.matrix(payload.vel));
+                    other_player.shoot(math.matrix(payload.incl));
+                }
                 break;
             }
             case "player_connected": {

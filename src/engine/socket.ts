@@ -14,6 +14,7 @@ export type ShootMsg = {
     name: string;
     pos: [number, number];
     vel: [number, number];
+    incl: [number, number];
 }
 
 // type "player_connected"
