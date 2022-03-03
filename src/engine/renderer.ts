@@ -13,21 +13,30 @@ export class Renderer {
         }, 1000 / 60);
     }
 
-    add_mousedown_listener(callback: (pos: math.Matrix) => void) {
+    public set_mousedown_listener(callback: (pos: math.Matrix) => void): void {
         this.m_ctx.canvas.addEventListener("mousedown", (event: MouseEvent) => {
             callback(math.matrix([event.offsetX, event.offsetY]));
         });
     }
+    public set_focus_out_listener(callback: () => void): void {
+        this.m_ctx.canvas.addEventListener("focusout", callback);
+    }
+    public set_key_down_listener(callback: (event: KeyboardEvent) => void): void {
+        this.m_ctx.canvas.addEventListener("keydown", callback);
+    }
+    public set_key_up_listener(callback: (event: KeyboardEvent) => void): void {
+        this.m_ctx.canvas.addEventListener("keyup", callback);
+    }
 
     public add_shape(shape: Shape): number {
-        let new_key = Math.random();
-        while (this.m_shapes.has(new_key))
-            new_key = Math.random();
-        this.m_shapes.set(new_key, shape);
-        return new_key;
+        let new_id = Math.random();
+        while (this.m_shapes.has(new_id))
+            new_id = Math.random();
+        this.m_shapes.set(new_id, shape);
+        return new_id;
     }
-    public remove_shape(key: number) {
-        this.m_shapes.delete(key);
+    public remove_shape(id: number) {
+        this.m_shapes.delete(id);
     }
 
     private clear_viewport(): void {

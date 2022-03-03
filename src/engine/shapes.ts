@@ -1,4 +1,4 @@
-import {Ctx} from "./canvas";
+import { Ctx } from "./canvas";
 import * as math from "mathjs";
 
 export abstract class Shape {
