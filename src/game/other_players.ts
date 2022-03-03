@@ -1,9 +1,10 @@
 import { Circle } from "../engine/shapes";
 import { Renderer } from "../engine/renderer";
+import { g_socket, RawMsg } from "../engine/socket";
 import * as math from "mathjs";
 
 // display other player
-export class OtherPlayer {
+class OtherPlayer {
     private m_renderer: Renderer;
     private m_name: string;
 
@@ -32,5 +33,20 @@ export class OtherPlayer {
         // TODO: use timings and time stamps
         this.m_pos = math.add(this.m_pos, this.m_vel) as math.Matrix;
         this.m_circle.set_pos(this.m_pos);
+    }
+}
+
+export class OtherPlayerHandler {
+    private m_other_players: Map<string, OtherPlayer> = new Map<string, OtherPlayer>();
+
+    constructor() {
+        g_socket.on("message", msg => {
+            let loaded_msg: RawMsg = JSON.parse(msg);
+            switch (loaded_msg.type) {
+                case "reposition":
+                    break;
+                // ignore wrong inputs
+            }
+        })
     }
 }

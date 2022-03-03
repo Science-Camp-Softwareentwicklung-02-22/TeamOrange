@@ -1,6 +1,6 @@
 import { Circle } from "../engine/shapes";
 import { Renderer } from "../engine/renderer";
-import { g_socket } from "../engine/socket";
+import { g_socket, RawMsg, RepositionMsg } from "../engine/socket";
 import * as math from "mathjs";
 
 // control player
@@ -114,9 +114,14 @@ export class Player {
 
     private propagate_movement() {
         let new_pos = math.add(this.m_pos, this.m_vel) as math.Matrix;
-        g_socket.emit("message", JSON.stringify({
-            pos: [new_pos.get([0]), new_pos.get([1])],
-            vel: [this.m_vel.get([0]), this.m_vel.get([1])],
-        }));
+        let msg: RawMsg = {
+            type: "reposition",
+            payload: {
+                name: "m_name",
+                pos: [new_pos.get([0]), new_pos.get([1])],
+                vel: [this.m_vel.get([0]), this.m_vel.get([1])],
+            },
+        };
+        g_socket.emit("message", JSON.stringify(msg));
     }
 }
