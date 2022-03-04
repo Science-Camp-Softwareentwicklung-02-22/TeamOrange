@@ -80,12 +80,6 @@ body h2 {
     height: 750px;
 }
 body {
-    background-color: beige;
-}
-.heading {
-    color: orange;
-    font-size: 50px;
-    text-align: center;
-    text-shadow: 3px 4px 5px red;
+    background-color: rgb(255, 255, 255);
 }
 
