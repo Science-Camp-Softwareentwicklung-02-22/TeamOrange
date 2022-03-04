@@ -99,6 +99,8 @@ export class Circle extends Shape {
         ) as math.Matrix;
         // only works because inclination is normalized
         let length = math.dot(ray.get_inclination(), point_to_center);
+        if (length < 0)
+            return -1;
         let point_to_intersection = math.multiply(
             ray.get_inclination(),
             length

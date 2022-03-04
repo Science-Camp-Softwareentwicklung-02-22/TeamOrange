@@ -23,7 +23,7 @@ export function shoot(renderer: Renderer, player: Player | null, other_players: 
     }
 
     if (player) {
-        // test where player itself hit
+        // test if player itself hit
         let player_distance = player.ray_intersect(ray);
         if (player_distance != -1 && player_distance < min_distance) {
             min_distance = player_distance;

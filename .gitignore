@@ -41,7 +41,7 @@ dist/**/*
 yarn.lock
 
 # typescript javascript output
-public/*.js
+public/js/*.js
 
 # vsc files
 

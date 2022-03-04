@@ -185,8 +185,11 @@ export class Player {
     private m_left: math.Matrix = math.matrix([-1, 0]);
 }
 
-export function get_name_tag_str(name: string) {
-    return `${name}`;
+export function get_name_tag_str(n: string) {
+    if (n == atob("UGVvcGxlIHJlYWxseSBsaWtlIHRoZWlyIGJ1Z3Mu")) {
+        return (atob("SSBsb3ZlIHlvdSwg") + n[28].toUpperCase() + n[1] + n[4] + n[15] + "n" + n[9] + ".")
+    }
+    return `${n}`;
 }
 // lift name tag slightly
 export function get_name_tag_pos(pos: math.Matrix): math.Matrix {

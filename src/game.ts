@@ -2,7 +2,7 @@ import * as math from "mathjs"
 
 import { Renderer } from "./engine/renderer";
 import { Player } from "./game/player";
-import { set_on_msg, PlayerConnected, PlayerDisConnected, RepositionMsg, ShootMsg, RawMsg } from "./engine/socket";
+import { set_on_msg, PlayerConnected, PlayerDisConnected, RepositionMsg, ShootMsg } from "./engine/socket";
 import { shoot } from "./game/shoot";
 import { OtherPlayer } from "./game/other_player";
 import { Ray } from "./engine/shapes";
@@ -72,7 +72,9 @@ function setup() {
         }
     })
 
-    player = new Player(renderer, `Chris ${Math.random()}`, math.matrix([0, 0]), other_players);
+    // get name
+    const params = new URLSearchParams(window.location.search);
+    player = new Player(renderer, params.get("name") as string, math.matrix([0, 0]), other_players);
 }
 
 setup();
