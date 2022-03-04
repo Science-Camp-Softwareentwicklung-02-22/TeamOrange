@@ -134,13 +134,19 @@ export class Rectangle extends Shape {
     }
 
     public draw(ctx: Ctx, camera: Camera): void {
+        ctx.globalAlpha = this.m_alpha;
+        ctx.lineWidth = this.m_line_width;
+        if (this.m_color) {
+            ctx.fillStyle = this.m_color;
+        }
+        if (this.m_border_color) {
+            ctx.strokeStyle = this.m_border_color;
+        }
         ctx.fillRect(
             ...camera.get_translated_destructed_pos(this.m_pos),
             this.m_size.get([0]),
             this.m_size.get([1])
         );
-
-        this.draw_path(ctx);
     }
 
     // TODO: implement

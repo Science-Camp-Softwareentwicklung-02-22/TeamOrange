@@ -4,7 +4,6 @@ import { Renderer } from "./engine/renderer";
 import { Player } from "./game/player";
 import { set_on_msg, PlayerConnected, PlayerDisConnected, RepositionMsg, ShootMsg } from "./engine/socket";
 import { OtherPlayer } from "./game/other_player";
-import { Camera } from "./engine/camera";
 
 function setup() {
     let player: Player | null = null;
@@ -17,6 +16,7 @@ function setup() {
             other_player[1].update();
         }
     });
+    renderer.set_clear_color("black");
 
     set_on_msg(msg => {
         // TODO: remove code duplication

@@ -19,6 +19,8 @@ export class Renderer {
     public get_dimensions(): math.Matrix { return this.m_dimensions; }
     public get_camera(): Camera { return this.m_camera; }
 
+    public set_clear_color(color: string) { this.m_clear_color = color; }
+
     public set_mousedown_listener(callback: (pos: math.Matrix) => void): void {
         this.m_ctx.canvas.addEventListener("mousedown", (event: MouseEvent) => {
             callback(math.matrix([event.offsetX, event.offsetY]));
@@ -47,6 +49,9 @@ export class Renderer {
 
     private clear_viewport(): void {
         this.m_ctx.clearRect(0, 0, this.m_ctx.canvas.width, this.m_ctx.canvas.height);
+        this.m_ctx.globalAlpha = 1;
+        this.m_ctx.fillStyle = this.m_clear_color;
+        this.m_ctx.fillRect(0, 0, this.m_ctx.canvas.width, this.m_ctx.canvas.height);
     }
 
     private render(): void {
@@ -67,5 +72,7 @@ export class Renderer {
     m_camera: Camera;
     m_dimensions: math.Matrix;
     m_shapes = new Map<number, Shape>();
+
+    m_clear_color = "white";
 }
 
