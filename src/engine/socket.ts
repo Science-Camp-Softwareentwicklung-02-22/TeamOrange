@@ -28,9 +28,16 @@ export type PlayerDisConnected = {
     name: string;
 }
 
+// type "player_died"
+export type PlayerDied = {
+    name: string;
+    pos: [number, number];
+    vel: [number, number];
+}
+
 export type RawMsg = {
     type: string;
-    payload: RepositionMsg | ShootMsg | PlayerConnected | PlayerDisConnected;
+    payload: RepositionMsg | ShootMsg | PlayerConnected | PlayerDisConnected | PlayerDied;
 }
 
 export function send_msg(msg: RawMsg) {
