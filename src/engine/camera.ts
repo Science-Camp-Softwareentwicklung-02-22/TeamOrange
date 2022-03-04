@@ -1,5 +1,6 @@
 import * as math from "mathjs";
 
+// TODO: use ctx.save, ctx.translate and ctx.restore instead
 export class Camera {
     constructor(dimensions: math.Matrix) {
         this.m_dimensions = dimensions;

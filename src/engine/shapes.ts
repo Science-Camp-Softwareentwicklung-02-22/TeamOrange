@@ -222,3 +222,35 @@ export class Ray extends Shape {
     m_inclination: math.Matrix;
     m_length: number;
 }
+
+export class TextBox extends Shape {
+    constructor(
+        pos: math.Matrix,
+        color: string,
+        alpha: number,
+        font_size: number,
+        text: string
+    ) {
+        super(pos, color, alpha, "", 1);
+        this.m_font_size = font_size;
+        this.m_text = text;
+    }
+
+    public set_text(text: string) { this.m_text = text; }
+
+    public draw(ctx: Ctx, camera: Camera) {
+        ctx.font = `${this.m_font_size}px Sans`;
+        ctx.textAlign = "center";
+        ctx.globalAlpha = this.m_alpha;
+        ctx.fillStyle = this.m_color;
+        ctx.fillText(this.m_text, ...camera.get_translated_destructed_pos(this.m_pos))
+    }
+
+    // TODO: implement
+    public ray_intersect(ray: Ray): number {
+        return 0;
+    }
+
+    private m_text: string;
+    private m_font_size: number;
+}

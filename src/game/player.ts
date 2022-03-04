@@ -1,6 +1,6 @@
 import * as math from "mathjs";
 
-import { Circle, Ray } from "../engine/shapes";
+import { Circle, Ray, TextBox } from "../engine/shapes";
 import { Camera } from "../engine/camera";
 import { Renderer } from "../engine/renderer";
 import { send_msg } from "../engine/socket";
@@ -14,6 +14,8 @@ export class Player {
         this.m_pos = pos;
         this.m_circle = new Circle(this.m_pos, "lightblue", 1, "blue", 1, 20);
         this.m_renderer.add_shape(this.m_circle);
+        this.m_display_name = new TextBox(this.get_name_tag_pos(), "white", 1, 30, this.get_name_tag_str(name));
+        this.m_renderer.add_shape(this.m_display_name);
 
         send_msg({
             type: "player_connected",
@@ -126,6 +128,7 @@ export class Player {
         this.m_pos = math.add(this.m_pos, this.m_vel) as math.Matrix;
         this.m_circle.set_pos(this.m_pos);
         this.m_camera.set_pos(this.m_pos);
+        this.m_display_name.set_pos(this.get_name_tag_pos());
     }
 
     private propagate_movement() {
@@ -157,6 +160,7 @@ export class Player {
     private m_camera: Camera;
 
     private m_name: string;
+    private m_display_name: TextBox;
 
     private m_pos: math.Matrix;
     // pixel per frame
@@ -171,4 +175,12 @@ export class Player {
     private m_down: math.Matrix = math.matrix([0, 1]);
     private m_right: math.Matrix = math.matrix([1, 0]);
     private m_left: math.Matrix = math.matrix([-1, 0]);
+}
+
+export function get_name_tag_str(name: string) {
+    return `${name}`;
+}
+// lift name tag slightly
+export function get_name_tag_pos(pos: math.Matrix): math.Matrix {
+    return math.add(pos, math.matrix([0, -40])) as math.Matrix;
 }
