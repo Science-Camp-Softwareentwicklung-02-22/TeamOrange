@@ -2,28 +2,39 @@
 <html lang="en">
 
 <head>
-    <title>Team Orange</title>
+    <title>Project Orange</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
-    <h1 class="heading">Project Orange</h1>
-    <canvas id="play_canvas" tabindex=1 style="
-    border: 1px solid;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    width: 1000px;
-    height: 750px;">
-        Sorry, your browser does not support the canvas tag.
-    </canvas>
+    <audio autoplay src="./music/Miami.mp3">
+        <code>audio</code> element.
+    </audio>
 
-    <script src="./index.js"></script>
+    <div class="grid"></div>
+    <div class="lines"></div>
+    <svg viewBox="0 0 1600 300">
+        <symbol id="s-text">
+            <text text-anchor="middle" x="50%" y="80%">PROJECT ORANGE</text>
+        </symbol>
+
+        <g class="g-ants">
+            <use xlink:href="#s-text" class="text-copy"></use>
+            <use xlink:href="#s-text" class="text-copy"></use>
+            <use xlink:href="#s-text" class="text-copy"></use>
+            <use xlink:href="#s-text" class="text-copy"></use>
+            <use xlink:href="#s-text" class="text-copy"></use>
+        </g>
+    </svg>
+    <div id="container">
+        <a id="start_button">PLAY</a>
+        <div id="container"></div>
+    </div>
+
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
