@@ -25,7 +25,6 @@ export class Player {
 
         // increase velocity when pressing
         renderer.set_key_down_listener((event) => {
-            console.log("keydown");
             if (event.repeat) return;
 
             switch (event.code) {
@@ -102,7 +101,6 @@ export class Player {
 
         // reset velocity when loosing focus
         renderer.set_focus_out_listener(() => {
-            console.log("out");
             this.m_vel = math.matrix([0, 0]);
         });
 
