@@ -37,7 +37,7 @@ export function shoot(renderer: Renderer, player: Player | null, other_players: 
     ray.set_length(min_distance);
     let id = renderer.add_shape(ray);
     // evaporate ray
-    setTimeout(() => {
-        renderer.remove_shape(id);
-    }, 500);
+    // setTimeout(() => {
+    //     renderer.remove_shape(id);
+    // }, 500);
 }
