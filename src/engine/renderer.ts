@@ -1,10 +1,13 @@
 import { Ctx } from "./canvas";
 import { Shape } from "./shapes";
 import * as math from "mathjs";
+import { Camera } from "./camera";
 
 export class Renderer {
     constructor(canvas_id: string, update_callback: () => void) {
         this.m_ctx = this.setup_canvas(canvas_id);
+        this.m_dimensions = math.matrix([this.m_ctx.canvas.width, this.m_ctx.canvas.height]);
+        this.m_camera = new Camera(this.m_dimensions);
         // 60fps
         setInterval(() => {
             // TODO: add timing
@@ -12,6 +15,9 @@ export class Renderer {
             this.render();
         }, 1000 / 60);
     }
+
+    public get_dimensions(): math.Matrix { return this.m_dimensions; }
+    public get_camera(): Camera { return this.m_camera; }
 
     public set_mousedown_listener(callback: (pos: math.Matrix) => void): void {
         this.m_ctx.canvas.addEventListener("mousedown", (event: MouseEvent) => {
@@ -46,7 +52,7 @@ export class Renderer {
     private render(): void {
         this.clear_viewport();
         for (let shape of this.m_shapes)
-            shape[1].draw(this.m_ctx);
+            shape[1].draw(this.m_ctx, this.m_camera);
     }
 
     private setup_canvas(canvas_id: string): CanvasRenderingContext2D {
@@ -58,7 +64,8 @@ export class Renderer {
     }
 
     m_ctx: Ctx;
+    m_camera: Camera;
+    m_dimensions: math.Matrix;
     m_shapes = new Map<number, Shape>();
 }
-
 

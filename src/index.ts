@@ -4,6 +4,7 @@ import { Renderer } from "./engine/renderer";
 import { Player } from "./game/player";
 import { set_on_msg, PlayerConnected, PlayerDisConnected, RepositionMsg, ShootMsg } from "./engine/socket";
 import { OtherPlayer } from "./game/other_player";
+import { Camera } from "./engine/camera";
 
 function setup() {
     let player: Player | null = null;
@@ -65,7 +66,7 @@ function setup() {
         }
     })
 
-    player = new Player(renderer, `Chris ${Math.random()}`, math.matrix([150, 50]));
+    player = new Player(renderer, `Chris ${Math.random()}`, math.matrix([0, 0]));
 }
 
 setup();

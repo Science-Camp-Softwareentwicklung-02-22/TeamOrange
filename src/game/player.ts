@@ -1,30 +1,15 @@
 import * as math from "mathjs";
 
 import { Circle, Ray } from "../engine/shapes";
+import { Camera } from "../engine/camera";
 import { Renderer } from "../engine/renderer";
 import { send_msg } from "../engine/socket";
 
 // control player
 export class Player {
-    private m_renderer: Renderer;
-    private m_name: string;
-
-    private m_pos: math.Matrix;
-    // pixel per frame
-    private m_vel: math.Matrix = math.matrix([0, 0]);
-    // pixel per frame per frame
-    private m_acc: number = 5;
-
-    private m_circle: Circle;
-    // for mouse
-    // directional vectors
-    private m_up: math.Matrix = math.matrix([0, -1]);
-    private m_down: math.Matrix = math.matrix([0, 1]);
-    private m_right: math.Matrix = math.matrix([1, 0]);
-    private m_left: math.Matrix = math.matrix([-1, 0]);
-
     constructor(renderer: Renderer, name: string, pos: math.Matrix) {
         this.m_renderer = renderer;
+        this.m_camera = renderer.get_camera();
         this.m_name = name;
         this.m_pos = pos;
         this.m_circle = new Circle(this.m_pos, "lightblue", 1, "blue", 1, 20);
@@ -121,9 +106,10 @@ export class Player {
             this.m_vel = math.matrix([0, 0]);
         });
 
-        // adding ray shooting to the game
+        // ray shooting
         renderer.set_mousedown_listener((pos) => {
-            let inclination = math.subtract(pos, this.m_pos) as math.Matrix;
+            let world_pos = this.m_camera.get_inverse_pos(pos);
+            let inclination = math.subtract(world_pos, this.m_pos) as math.Matrix;
             let ray = new Ray(this.m_pos, "blue", 1, 1, inclination);
             let id = this.m_renderer.add_shape(ray);
 
@@ -141,6 +127,7 @@ export class Player {
         // TODO: use timings
         this.m_pos = math.add(this.m_pos, this.m_vel) as math.Matrix;
         this.m_circle.set_pos(this.m_pos);
+        this.m_camera.set_pos(this.m_pos);
     }
 
     private propagate_movement() {
@@ -167,4 +154,23 @@ export class Player {
             },
         });
     }
+
+    private m_renderer: Renderer;
+    private m_camera: Camera;
+
+    private m_name: string;
+
+    private m_pos: math.Matrix;
+    // pixel per frame
+    private m_vel: math.Matrix = math.matrix([0, 0]);
+    // pixel per frame per frame
+    private m_acc: number = 5;
+
+    private m_circle: Circle;
+    // for mouse
+    // directional vectors
+    private m_up: math.Matrix = math.matrix([0, -1]);
+    private m_down: math.Matrix = math.matrix([0, 1]);
+    private m_right: math.Matrix = math.matrix([1, 0]);
+    private m_left: math.Matrix = math.matrix([-1, 0]);
 }

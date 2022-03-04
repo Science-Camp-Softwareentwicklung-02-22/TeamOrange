@@ -1,5 +1,6 @@
 import { Ctx } from "./canvas";
 import * as math from "mathjs";
+import { Camera } from "./camera";
 
 export abstract class Shape {
     constructor(
@@ -32,7 +33,7 @@ export abstract class Shape {
         this.m_line_width = line_width;
     }
 
-    public abstract draw(ctx: Ctx): void;
+    public abstract draw(ctx: Ctx, camera: Camera): void;
 
     // return -1 when not hit
     public abstract ray_intersect(ray: Ray): number;
@@ -77,11 +78,10 @@ export class Circle extends Shape {
         this.m_radius = radius;
     }
 
-    public draw(ctx: Ctx): void {
+    public draw(ctx: Ctx, camera: Camera): void {
         ctx.beginPath();
         ctx.arc(
-            this.m_pos.get([0]),
-            this.m_pos.get([1]),
+            ...camera.get_translated_destructed_pos(this.m_pos),
             this.m_radius,
             0,
             Math.PI * 2
@@ -133,10 +133,9 @@ export class Rectangle extends Shape {
         this.m_size = size;
     }
 
-    public draw(ctx: Ctx): void {
+    public draw(ctx: Ctx, camera: Camera): void {
         ctx.fillRect(
-            this.m_pos.get([0]),
-            this.m_pos.get([1]),
+            ...camera.get_translated_destructed_pos(this.m_pos),
             this.m_size.get([0]),
             this.m_size.get([1])
         );
@@ -196,11 +195,11 @@ export class Ray extends Shape {
         return this.m_inclination;
     }
 
-    public draw(ctx: Ctx): void {
+    public draw(ctx: Ctx, camera: Camera): void {
         ctx.beginPath();
-        ctx.moveTo(this.m_pos.get([0]), this.m_pos.get([1]));
+        ctx.moveTo(...camera.get_translated_destructed_pos(this.m_pos));
         let end = math.add(
-            this.m_pos,
+            camera.get_translated_pos(this.m_pos),
             math.multiply(this.m_inclination, this.m_length)
         ) as math.Matrix;
         ctx.lineTo(end.get([0]), end.get([1]));

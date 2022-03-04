@@ -1,5 +1,7 @@
 # TeamOrange
 
+A little top down shooter written in a week.
+
 ## Commands
 
 ### Installation
