@@ -1,5 +1,7 @@
 # Project Orange
 
+<img align="center" src="project_orange.png">
+
 A little 2D Multiplayer Laser Shooting Game written in a Week.
 Play [here](http://media.lehr-lern-labor.info:3021).
 
