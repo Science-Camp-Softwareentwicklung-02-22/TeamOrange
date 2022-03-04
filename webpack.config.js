@@ -9,6 +9,7 @@ module.exports = (env) => {
         // only entry file, include any imported files
         entry: {
             index: "./src/index.ts",
+            game: "./src/game.ts",
         },
         module: {
             rules: [
@@ -28,7 +29,7 @@ module.exports = (env) => {
             // template based on keys in entry
             filename: "[name].js",
             // need absolute path
-            path: path.resolve(__dirname, "public"),
+            path: path.resolve(__dirname, "public/js"),
         },
     };
 };
