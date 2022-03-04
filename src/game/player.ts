@@ -14,8 +14,8 @@ export class Player {
         this.m_pos = pos;
         this.m_circle = new Circle(this.m_pos, "lightblue", 1, "blue", 1, 20);
         this.m_renderer.add_shape(this.m_circle);
-        this.m_display_name = new TextBox(this.get_name_tag_pos(), "white", 1, 30, this.get_name_tag_str(name));
-        this.m_renderer.add_shape(this.m_display_name);
+        this.m_name_tag = new TextBox(get_name_tag_pos(this.m_pos), "white", 1, 30, get_name_tag_str(name));
+        this.m_renderer.add_shape(this.m_name_tag);
 
         send_msg({
             type: "player_connected",
@@ -26,7 +26,7 @@ export class Player {
         });
 
         // increase velocity when pressing
-        renderer.set_key_down_listener((event) => {
+        document.addEventListener("keydown", (event) => {
             if (event.repeat) return;
 
             switch (event.code) {
@@ -64,7 +64,7 @@ export class Player {
             }
         });
 
-        renderer.set_key_up_listener((event) => {
+        document.addEventListener("keyup", (event) => {
             // decrease velocity when releasing
             switch (event.code) {
                 case "KeyD":
@@ -102,7 +102,7 @@ export class Player {
         });
 
         // reset velocity when loosing focus
-        renderer.set_focus_out_listener(() => {
+        document.addEventListener("blur", () => {
             this.m_vel = math.matrix([0, 0]);
         });
 
@@ -128,7 +128,7 @@ export class Player {
         this.m_pos = math.add(this.m_pos, this.m_vel) as math.Matrix;
         this.m_circle.set_pos(this.m_pos);
         this.m_camera.set_pos(this.m_pos);
-        this.m_display_name.set_pos(this.get_name_tag_pos());
+        this.m_name_tag.set_pos(get_name_tag_pos(this.m_pos));
     }
 
     private propagate_movement() {
@@ -160,7 +160,7 @@ export class Player {
     private m_camera: Camera;
 
     private m_name: string;
-    private m_display_name: TextBox;
+    private m_name_tag: TextBox;
 
     private m_pos: math.Matrix;
     // pixel per frame

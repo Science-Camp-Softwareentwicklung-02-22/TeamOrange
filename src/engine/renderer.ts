@@ -26,15 +26,6 @@ export class Renderer {
             callback(math.matrix([event.offsetX, event.offsetY]));
         });
     }
-    public set_focus_out_listener(callback: () => void): void {
-        this.m_ctx.canvas.addEventListener("focusout", callback);
-    }
-    public set_key_down_listener(callback: (event: KeyboardEvent) => void): void {
-        this.m_ctx.canvas.addEventListener("keydown", callback);
-    }
-    public set_key_up_listener(callback: (event: KeyboardEvent) => void): void {
-        this.m_ctx.canvas.addEventListener("keyup", callback);
-    }
 
     public add_shape(shape: Shape): number {
         let new_id = Math.random();
