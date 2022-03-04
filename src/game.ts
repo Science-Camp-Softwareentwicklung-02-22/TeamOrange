@@ -2,8 +2,11 @@ import * as math from "mathjs"
 
 import { Renderer } from "./engine/renderer";
 import { Player } from "./game/player";
-import { set_on_msg, PlayerConnected, PlayerDisConnected, RepositionMsg, ShootMsg } from "./engine/socket";
+import { set_on_msg, PlayerConnected, PlayerDisConnected, RepositionMsg, ShootMsg, RawMsg } from "./engine/socket";
+import { shoot } from "./game/shoot";
 import { OtherPlayer } from "./game/other_player";
+import { Ray } from "./engine/shapes";
+import { create_map } from "./game/map";
 
 function setup() {
     let player: Player | null = null;
@@ -17,6 +20,7 @@ function setup() {
         }
     });
     renderer.set_clear_color("black");
+    create_map(renderer);
 
     set_on_msg(msg => {
         // TODO: remove code duplication
@@ -39,13 +43,15 @@ function setup() {
                 if (!other_players.has(payload.name)) {
                     let other_player = new OtherPlayer(renderer, payload.name, math.matrix(payload.pos));
                     other_players.set(payload.name, other_player);
-                    other_player.shoot(math.matrix(payload.incl));
+                    let ray = new Ray(other_player.get_pos(), "red", 1, 1, math.matrix(payload.incl));
+                    shoot(renderer, player as Player, other_players, ray, payload.name);
                 }
                 else {
                     let other_player = other_players.get(payload.name) as OtherPlayer;
                     other_players.get(payload.name)?.set_pos(math.matrix(payload.pos));
                     other_players.get(payload.name)?.set_vel(math.matrix(payload.vel));
-                    other_player.shoot(math.matrix(payload.incl));
+                    let ray = new Ray(other_player.get_pos(), "red", 1, 1, math.matrix(payload.incl));
+                    shoot(renderer, player as Player, other_players, ray, payload.name);
                 }
                 break;
             }
@@ -66,7 +72,7 @@ function setup() {
         }
     })
 
-    player = new Player(renderer, `Chris ${Math.random()}`, math.matrix([0, 0]));
+    player = new Player(renderer, `Chris ${Math.random()}`, math.matrix([0, 0]), other_players);
 }
 
 setup();

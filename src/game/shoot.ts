@@ -1,25 +1,43 @@
+import { Renderer } from "../engine/renderer";
+import { Ray } from "../engine/shapes";
 import { OtherPlayer } from "./other_player";
 import { Player } from "./player";
 
-export function shoot(player: Player, other_players: Map<string, OtherPlayer>) {
+// TODO: please don't
+const INF = 10000000000;
 
-    let ray = new Ray(this.m_pos, "red", 1, 1, inclination);
-    let id = this.m_renderer.add_shape(ray);
+// set player to null when own player is the one shooting
+export function shoot(renderer: Renderer, player: Player | null, other_players: Map<string, OtherPlayer>, ray: Ray, shooter: string | null = null) {
+    // get length of ray
+    let min_distance = INF;
+
+    // set min_distance correctly according to other players
+    for (let other_player of other_players) {
+        // player can't shoot itself
+        if (other_player[0] === shooter)
+            continue;
+
+        let other_player_distance = other_player[1].ray_intersect(ray);
+        if (other_player_distance != -1 && other_player_distance < min_distance)
+            min_distance = other_player_distance;
+    }
+
+    if (player) {
+        // test where player itself hit
+        let player_distance = player.ray_intersect(ray);
+        if (player_distance != -1 && player_distance < min_distance) {
+            min_distance = player_distance;
+            if (min_distance != INF)
+                player.kill();
+        }
+    }
+
+
+    // render ray
+    let id = renderer.add_shape(ray);
+    ray.set_length(min_distance);
     // evaporate ray
     setTimeout(() => {
-        this.m_renderer.remove_shape(id);
+        renderer.remove_shape(id);
     }, 500);
-
-    let world_pos = this.m_camera.get_inverse_pos(pos);
-    let inclination = math.subtract(world_pos, this.m_pos) as math.Matrix;
-    let ray = new Ray(this.m_pos, "blue", 1, 1, inclination);
-    let id = this.m_renderer.add_shape(ray);
-
-    // evaporate ray
-    setTimeout(() => {
-        this.m_renderer.remove_shape(id);
-    }, 500);
-
-    // tell other players
-    this.propagate_shot(inclination);
 }

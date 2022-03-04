@@ -1,5 +1,6 @@
-import { Ctx } from "./canvas";
 import * as math from "mathjs";
+
+import { Ctx } from "./canvas";
 import { Camera } from "./camera";
 
 export abstract class Shape {

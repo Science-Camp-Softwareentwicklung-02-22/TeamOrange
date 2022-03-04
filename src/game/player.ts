@@ -4,10 +4,12 @@ import { Circle, Ray, TextBox } from "../engine/shapes";
 import { Camera } from "../engine/camera";
 import { Renderer } from "../engine/renderer";
 import { send_msg } from "../engine/socket";
+import { shoot } from "./shoot";
+import { OtherPlayer } from "./other_player";
 
 // control player
 export class Player {
-    constructor(renderer: Renderer, name: string, pos: math.Matrix) {
+    constructor(renderer: Renderer, name: string, pos: math.Matrix, other_players: Map<string, OtherPlayer>) {
         this.m_renderer = renderer;
         this.m_camera = renderer.get_camera();
         this.m_name = name;
@@ -111,16 +113,22 @@ export class Player {
             let world_pos = this.m_camera.get_inverse_pos(pos);
             let inclination = math.subtract(world_pos, this.m_pos) as math.Matrix;
             let ray = new Ray(this.m_pos, "blue", 1, 1, inclination);
-            let id = this.m_renderer.add_shape(ray);
-
-            // evaporate ray
-            setTimeout(() => {
-                this.m_renderer.remove_shape(id);
-            }, 500);
+            shoot(renderer, null, other_players, ray);
 
             // tell other players
             this.propagate_shot(inclination);
         });
+    }
+
+    public ray_intersect(ray: Ray): number {
+        return this.m_circle.ray_intersect(ray);
+    }
+
+    public kill() {
+        console.log("died");
+        // TODO: use random spawn location
+        this.m_pos = math.matrix([0, 0]);
+        this.propagate_movement();
     }
 
     public update() {

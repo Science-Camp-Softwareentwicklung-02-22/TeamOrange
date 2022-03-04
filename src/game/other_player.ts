@@ -16,16 +16,12 @@ export class OtherPlayer {
         this.m_renderer.add_shape(this.m_name_tag);
     }
 
-    public set_pos(pos: math.Matrix) { this.m_pos = pos; }
-    public set_vel(vel: math.Matrix) { this.m_vel = vel; }
+    public set_pos(pos: math.Matrix): void { this.m_pos = pos; }
+    public set_vel(vel: math.Matrix): void { this.m_vel = vel; }
+    public get_pos(): math.Matrix { return this.m_pos; }
 
-    public shoot(inclination: math.Matrix) {
-        let ray = new Ray(this.m_pos, "red", 1, 1, inclination);
-        let id = this.m_renderer.add_shape(ray);
-        // evaporate ray
-        setTimeout(() => {
-            this.m_renderer.remove_shape(id);
-        }, 500);
+    public ray_intersect(ray: Ray): number {
+        return this.m_circle.ray_intersect(ray);
     }
 
     public update() {
