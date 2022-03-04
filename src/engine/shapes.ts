@@ -87,6 +87,7 @@ export class Circle extends Shape {
             0,
             Math.PI * 2
         );
+        ctx.closePath();
 
         this.draw_path(ctx);
     }
@@ -212,6 +213,7 @@ export class Ray extends Shape {
             math.multiply(this.m_inclination, this.m_length)
         ) as math.Matrix;
         ctx.lineTo(end.get([0]), end.get([1]));
+        ctx.closePath();
 
         this.draw_path(ctx);
     }

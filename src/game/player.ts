@@ -16,7 +16,7 @@ export class Player {
         this.m_pos = pos;
         this.m_circle = new Circle(this.m_pos, "lightblue", 1, "blue", 1, 20);
         this.m_renderer.add_shape(this.m_circle);
-        this.m_name_tag = new TextBox(get_name_tag_pos(this.m_pos), "white", 1, 30, get_name_tag_str(name));
+        this.m_name_tag = new TextBox(get_name_tag_pos(this.m_pos), "white", 1, 30, get_name_tag_str(name, this.m_deaths));
         this.m_renderer.add_shape(this.m_name_tag);
 
         send_msg({
@@ -125,8 +125,8 @@ export class Player {
     }
 
     public kill() {
-        console.log("died");
-        // TODO: use random spawn location
+        this.m_name_tag.set_text(get_name_tag_str(this.m_name, ++this.m_deaths));
+        // respawn
         this.m_pos = math.matrix([0, 0]);
         this.propagate_movement();
     }
@@ -168,7 +168,7 @@ export class Player {
     private m_camera: Camera;
 
     private m_name: string;
-    private m_name_tag: TextBox;
+    private m_deaths = 0;
 
     private m_pos: math.Matrix;
     // pixel per frame
@@ -177,6 +177,7 @@ export class Player {
     private m_acc: number = 5;
 
     private m_circle: Circle;
+    private m_name_tag: TextBox;
     // for mouse
     // directional vectors
     private m_up: math.Matrix = math.matrix([0, -1]);
@@ -185,11 +186,13 @@ export class Player {
     private m_left: math.Matrix = math.matrix([-1, 0]);
 }
 
-export function get_name_tag_str(n: string) {
+export function get_name_tag_str(n: string, deaths: number | null = null) {
     if (n == atob("UGVvcGxlIHJlYWxseSBsaWtlIHRoZWlyIGJ1Z3Mu")) {
-        return (atob("SSBsb3ZlIHlvdSwg") + n[28].toUpperCase() + n[1] + n[4] + n[15] + "n" + n[9] + ".")
+        return `${atob("SSBsb3ZlIHlvdSwg")} ${n[28].toUpperCase()}${n[1]}${n[4]}${n[15]}n${n[9]}.`;
     }
-    return `${n}`;
+    if (deaths != null)
+        return `${n} (${deaths})`;
+    return n;
 }
 // lift name tag slightly
 export function get_name_tag_pos(pos: math.Matrix): math.Matrix {
