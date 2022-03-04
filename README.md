@@ -1,6 +1,6 @@
 # TeamOrange
 
-Etherpad: https://yopad.eu/p/SCSE_TeamOrange
+A little top down shooter written in a week.
 
 ## Commands
 
