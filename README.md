@@ -16,12 +16,14 @@ npm install
 
 ```
 npm run build_debug
+npm run dev
 ```
 
 ### Release Build
 
 ```
 npm run build_release
+npm run serve
 ```
 
 ## References
