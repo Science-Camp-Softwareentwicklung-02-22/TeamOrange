@@ -1,6 +1,7 @@
 # Project Orange
 
 A little 2D Multiplayer Laser Shooting Game written in a Week.
+Play [here](http://media.lehr-lern-labor.info:3021).
 
 ### Game Rules 
 
